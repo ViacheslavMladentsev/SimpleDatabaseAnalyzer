@@ -21,4 +21,12 @@ public class CustomerService {
         return iCustomerRepository.findAllByTitleAndCount(title, count);
     }
 
+    public List<CustomerEntity> findCustomersWithTotalPurchaseCostInRange(Integer min, Integer max) {
+        return iCustomerRepository.findCustomersWithTotalPurchaseCostInRange(min, max);
+    }
+
+    public List<CustomerEntity> findCustomersWithLeastNumberOfPurchases(Integer countCustomers) {
+        return iCustomerRepository.findCustomersWithLeastNumberOfPurchases(countCustomers);
+    }
+
 }

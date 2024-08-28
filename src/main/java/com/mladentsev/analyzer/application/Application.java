@@ -22,7 +22,7 @@ public class Application {
 
         ValidationInputArgument.validInput(args)
                 .ifPresent(outputError -> outputError
-                        .recordErrorOutput("/home/lieineyes/school21/test_task/SimpleDatabaseAnalyzer/output.json"));
+                        .recordErrorOutput("/home/lieineyes/school21/SimpleDatabaseAnalyzer/output.json"));
 
         Analyzer.run(context);
 

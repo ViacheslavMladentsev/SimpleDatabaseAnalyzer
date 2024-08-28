@@ -11,9 +11,14 @@ public class Analyzer {
 
     public static void run(ConfigurableApplicationContext context) {
         CustomerService customerService = context.getBean("customerService", CustomerService.class);
+
         System.out.println(customerService.findAllByLastName("Иванов"));
 
         System.out.println(customerService.findAllByTitleAndCount("Продукт 6", 3));
+
+        System.out.println(customerService.findCustomersWithTotalPurchaseCostInRange(3000, 10000));
+
+        System.out.println(customerService.findCustomersWithLeastNumberOfPurchases(3));
     }
 
 }
