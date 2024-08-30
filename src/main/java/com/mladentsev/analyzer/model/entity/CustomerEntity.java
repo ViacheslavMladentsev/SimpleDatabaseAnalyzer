@@ -4,11 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "customers")
 @Table(name = "customers")
 public class CustomerEntity {

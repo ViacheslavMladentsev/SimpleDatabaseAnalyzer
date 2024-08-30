@@ -1,0 +1,25 @@
+{
+  "criterias": [
+    {
+      "lastName": "Иванов"
+    },
+    {
+      "lastName": "ergherwgherwg"
+    },
+    {
+      "productName": "Продукт 4",
+      "minTimes": 6
+    },
+    {
+      "minExpenses": 3000,
+      "maxExpenses": 10000
+    },
+    {
+      "minExpenses": 100,
+      "maxExpenses": 300
+    },
+      {
+        "badCustomers": 3
+      }
+  ]
+}
