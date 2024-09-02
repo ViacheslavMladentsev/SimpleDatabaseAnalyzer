@@ -6,10 +6,9 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class OutputCustomerDTO {
+public class OutputCustomerSearchDTO {
 
     private String name;
-
     private String last_name;
 
 

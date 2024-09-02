@@ -1,8 +1,7 @@
 package com.mladentsev.analyzer.application;
 
-import com.mladentsev.analyzer.json.JsonTo;
+import com.mladentsev.analyzer.json.AnalyzerJsonReadWrightFile;
 import com.mladentsev.analyzer.validation.ValidationInputArgument;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -31,7 +30,7 @@ public class Application {
         CONTEXT = SpringApplication.run(Application.class, args);
 
         ValidationInputArgument.validInput(args)
-                .ifPresent(outputErrorDTO-> JsonTo.recordOutputJson(outputErrorDTO,
+                .ifPresent(outputErrorDTO-> AnalyzerJsonReadWrightFile.recordOutputJson(outputErrorDTO,
                         EMERGENCY_PATH_FOR_OUTPUT_FILE_WITH_ERROR));
 
         Analyzer.run(args);
