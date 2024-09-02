@@ -12,25 +12,34 @@ import java.util.Optional;
 
 public class JsonFrom {
 
-    private static final String ERROR_DESERIALIZATION = "error deserialization";
+    private static final String SEARCH = "search";
 
-    private static final String ERROR_INCORRECT_INPUT_PATH = "error path";
+    private static final String STATISTICS = "stat";
+
+    private static final String ERROR_DESERIALIZATION = "error read file";
 
     private static final String MESSAGE_ERROR_INCORRECT_INPUT_PATH = "по адресу %s файл отсутствует";
 
-    public static Optional<InputRequestSearchDTO> getRequestSearch(String pathInputFile, String pathOutputFile) {
+    private JsonFrom() {
+    }
+
+    public static Optional<Object> readInputJson(String operation, String pathInputFile, String pathOutputFile) {
+        Gson gson = new Gson();
+        File f = new File(pathInputFile);
         try {
-            Gson gson = new Gson();
-            File f = new File(pathInputFile);
             if (f.exists() && !f.isDirectory()) {
                 FileReader fr = new FileReader(f);
+                if (operation.equals(SEARCH)) {
+                    return Optional.of(new InputRequestSearchDTO(gson.fromJson(fr, InputRequestSearchDTO.class).getCriterias()));
+                } else if (operation.equals(STATISTICS)) {
+                    return Optional.of(new InputRequestSearchDTO(gson.fromJson(fr, InputRequestSearchDTO.class).getCriterias()));
+                }
                 fr.close();
-                return Optional.of(new InputRequestSearchDTO(gson.fromJson(fr, InputRequestSearchDTO.class).getInputCriteriaSearchDTOS()));
             } else {
-                new OutputErrorDTO(ERROR_INCORRECT_INPUT_PATH, String.format(MESSAGE_ERROR_INCORRECT_INPUT_PATH, f)).recordErrorOutput(pathOutputFile);
+                JsonTo.recordOutputJson(new OutputErrorDTO(ERROR_DESERIALIZATION, String.format(MESSAGE_ERROR_INCORRECT_INPUT_PATH, f)), pathOutputFile);
             }
         } catch (IOException e) {
-            new OutputErrorDTO(ERROR_DESERIALIZATION, e.getMessage()).recordErrorOutput(pathOutputFile);
+            JsonTo.recordOutputJson(new OutputErrorDTO(ERROR_DESERIALIZATION, e.getMessage()), pathOutputFile);
         }
         return Optional.empty();
     }

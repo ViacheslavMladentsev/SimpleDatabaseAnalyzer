@@ -20,15 +20,21 @@ public class Application {
     //TODO рассмотреть возхможность загрузки значения из файла с настройками
     private static final String EMERGENCY_PATH_FOR_OUTPUT_FILE_WITH_ERROR = "/home/lieineyes/school21/SimpleDatabaseAnalyzer/output.json";
 
+    private static ConfigurableApplicationContext CONTEXT;
+
+    public static ConfigurableApplicationContext getContext() {
+        return CONTEXT;
+    }
+
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+        CONTEXT = SpringApplication.run(Application.class, args);
 
-        System.out.println(EMERGENCY_PATH_FOR_OUTPUT_FILE_WITH_ERROR);
         ValidationInputArgument.validInput(args)
-                .ifPresent(outputErrorDTO -> JsonTo.recordOutputJson(outputErrorDTO, EMERGENCY_PATH_FOR_OUTPUT_FILE_WITH_ERROR));
+                .ifPresent(outputErrorDTO-> JsonTo.recordOutputJson(outputErrorDTO,
+                        EMERGENCY_PATH_FOR_OUTPUT_FILE_WITH_ERROR));
 
-        Analyzer.run(context, args);
+        Analyzer.run(args);
 
     }
 

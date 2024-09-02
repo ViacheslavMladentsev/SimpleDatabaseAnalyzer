@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class InputRequestSearchDTO {
 
-    List<InputCriteriaSearchDTO> inputCriteriaSearchDTOS;
+    List<InputCriteriaSearchDTO> criterias;
 
 }
