@@ -72,25 +72,33 @@ public class Analyzer {
         CustomerService customerService = Application.getContext().getBean("customerService", CustomerService.class);
         List<OutputSearchResultDTO> outputSearchResultDTOList = new ArrayList<>();
         for (InputCriteriaSearchDTO criteria : inputRequestSearchDTO.getCriterias()) {
-            // todo валидация criteria
             OutputCriteriaSearchDTO outputCriteriaSearchDTO = new OutputCriteriaSearchDTO();
             List<OutputCustomerSearchDTO> outputCustomerSearchDTOList = null;
-            if (criteria.getLastName() != null) {
-                outputCustomerSearchDTOList = customerService.findAllByLastName(criteria.getLastName());
-                outputCriteriaSearchDTO.setLastName(criteria.getLastName());
-            } else if (criteria.getProductName() != null && criteria.getMinTimes() != null) {
-                outputCustomerSearchDTOList = customerService.findAllByTitleAndCount(criteria.getProductName(), criteria.getMinTimes());
-                outputCriteriaSearchDTO.setProductName(criteria.getProductName());
-                outputCriteriaSearchDTO.setMinTimes(criteria.getMinTimes());
-            } else if (criteria.getMinExpenses() != null && criteria.getMaxExpenses() != null) {
-                outputCustomerSearchDTOList = customerService.findCustomersWithTotalPurchaseCostInRange(criteria.getMinExpenses(), criteria.getMaxExpenses());
-                outputCriteriaSearchDTO.setMinExpenses(criteria.getMinExpenses());
-                outputCriteriaSearchDTO.setMaxExpenses(criteria.getMaxExpenses());
-            } else if (criteria.getBadCustomers() != null) {
-                outputCustomerSearchDTOList = customerService.findCustomersWithLeastNumberOfPurchases(criteria.getBadCustomers());
-                outputCriteriaSearchDTO.setBadCustomers(criteria.getBadCustomers());
+            switch (criteria.getCruteriaType()) {
+                case LAST_NAME:
+                    outputCustomerSearchDTOList = customerService.findAllByLastName(criteria.getLastName());
+                    outputCriteriaSearchDTO.setLastName(criteria.getLastName());
+                    break;
+                case TITLE_AND_COUNT:
+                    outputCustomerSearchDTOList = customerService.findAllByTitleAndCount(criteria.getProductName(), criteria.getMinTimes());
+                    outputCriteriaSearchDTO.setProductName(criteria.getProductName());
+                    outputCriteriaSearchDTO.setMinTimes(criteria.getMinTimes());
+                    break;
+                case RANGE_MIN_MAX:
+                    outputCustomerSearchDTOList = customerService.findCustomersWithTotalPurchaseCostInRange(criteria.getMinExpenses(), criteria.getMaxExpenses());
+                    outputCriteriaSearchDTO.setMinExpenses(criteria.getMinExpenses());
+                    outputCriteriaSearchDTO.setMaxExpenses(criteria.getMaxExpenses());
+                    break;
+                case BAD_CUSTOMERS:
+                    outputCustomerSearchDTOList = customerService.findCustomersWithLeastNumberOfPurchases(criteria.getBadCustomers());
+                    outputCriteriaSearchDTO.setBadCustomers(criteria.getBadCustomers());
+                    break;
+                case INCORRECT_CRITERIA:
+                    //todo обработать
+                    break;
             }
             outputSearchResultDTOList.add(new OutputSearchResultDTO(outputCriteriaSearchDTO, outputCustomerSearchDTOList));
+
         }
         return new OutputResponseSearchDTO(SEARCH, outputSearchResultDTOList);
     }
