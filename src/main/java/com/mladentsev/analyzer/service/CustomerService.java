@@ -6,6 +6,7 @@ import com.mladentsev.analyzer.repositories.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class CustomerService {
      * @param  lastName принимает фамилию покупателя для поиска в базе
      * @return возвращает список покупателей с фамилией lastName
      */
-    public List<OutputCustomerSearchDTO> findAllByLastName(String lastName) {
+    public List<OutputCustomerSearchDTO> findAllByLastName(String lastName) throws SQLException {
         return iCustomerRepository.findAllByLastName(lastName)
                 .stream()
                 .map(entity -> new OutputCustomerSearchDTO(entity.getName(), entity.getLastName()))
@@ -39,7 +40,7 @@ public class CustomerService {
      * @param  count принимает минимальное количество покупок продукта title
      * @return возвращает список покупателей, которые купили title не менее count раз
      */
-    public List<OutputCustomerSearchDTO> findAllByTitleAndCount(String title, int count) {
+    public List<OutputCustomerSearchDTO> findAllByTitleAndCount(String title, int count) throws SQLException {
         return iCustomerRepository.findAllByTitleAndCount(title, count)
                 .stream()
                 .map(entity -> new OutputCustomerSearchDTO(entity.getName(), entity.getLastName()))
@@ -52,7 +53,7 @@ public class CustomerService {
      * @param  max принимает максимальное количество потраченных денег
      * @return возвращает список покупателей потративших денег из диапазона min max
      */
-    public List<OutputCustomerSearchDTO> findCustomersWithTotalPurchaseCostInRange(Integer min, Integer max) {
+    public List<OutputCustomerSearchDTO> findCustomersWithTotalPurchaseCostInRange(Integer min, Integer max) throws SQLException {
         return iCustomerRepository.findCustomersWithTotalPurchaseCostInRange(min, max)
                 .stream()
                 .map(entity -> new OutputCustomerSearchDTO(entity.getName(), entity.getLastName()))
@@ -64,7 +65,7 @@ public class CustomerService {
      * @param  countCustomers количество покупателей
      * @return возвращает список из countCustomers покупателей, совершивших наименьшее количество покупок
      */
-    public List<OutputCustomerSearchDTO> findCustomersWithLeastNumberOfPurchases(Integer countCustomers) {
+    public List<OutputCustomerSearchDTO> findCustomersWithLeastNumberOfPurchases(Integer countCustomers) throws SQLException {
         return iCustomerRepository.findCustomersWithLeastNumberOfPurchases(countCustomers)
                 .stream()
                 .map(entity -> new OutputCustomerSearchDTO(entity.getName(), entity.getLastName()))
@@ -76,7 +77,7 @@ public class CustomerService {
      * @param id принимает id покупателя
      * @return возвращает полное имя (имя + фамилия) покупателя
      */
-    public String findFullNameById(Long id) {
+    public String findFullNameById(Long id) throws SQLException {
         return iCustomerRepository.findFullNameById(id);
     }
 

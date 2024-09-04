@@ -5,6 +5,7 @@ import com.mladentsev.analyzer.repositories.IProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class ProductService {
      * @param endDate принимает конец периода
      * @return возвращает список продуктов, которые купил конкретный покупатель id в заданный период startDate endDate
      */
-    public List<OutputPurchaseStatisticDTO> findAllProductAndPriceByCustomerIdBetweenDate(Long id, Date startDate, Date endDate) {
+    public List<OutputPurchaseStatisticDTO> findAllProductAndPriceByCustomerIdBetweenDate(Long id, Date startDate, Date endDate) throws SQLException {
         return iProductRepository.findAllProductAndPriceByCustomerIdBetweenDate(id, startDate, endDate)
                 .stream()
                 .map(entity -> new OutputPurchaseStatisticDTO(entity.getName(), entity.getPrice()))

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface IProductRepository extends JpaRepository<ProductEntity, Long> {
             "LEFT JOIN public.products AS pr on p.product_id = pr.id\n" +
             "WHERE p.customer_id = ?1 AND p.date BETWEEN ?2 AND ?3",
             nativeQuery = true)
-    List<ProductEntity> findAllProductAndPriceByCustomerIdBetweenDate(Long id, Date startDate, Date endDate);
+    List<ProductEntity> findAllProductAndPriceByCustomerIdBetweenDate(Long id, Date startDate, Date endDate) throws SQLException;
 }

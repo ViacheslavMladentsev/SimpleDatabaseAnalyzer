@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-    List<CustomerEntity> findAllByLastName(String lastName);
+    List<CustomerEntity> findAllByLastName(String lastName) throws SQLException;
 
     @Query(value = "SELECT c.id, c.name, c.last_name \n" +
             "FROM public.purchases AS p \n" +
@@ -23,7 +24,7 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             "GROUP BY c.id, c.name, c.last_name \n" +
             "HAVING count(pr.title) >= ?2 ",
             nativeQuery = true)
-    List<CustomerEntity> findAllByTitleAndCount(String title, Integer count);
+    List<CustomerEntity> findAllByTitleAndCount(String title, Integer count) throws SQLException;
 
     @Query(value = "SELECT c.id, c.name, c.last_name, sum(pr.price)\n" +
             "FROM public.customers AS c\n" +
@@ -32,7 +33,7 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             "GROUP BY c.id, c.name, c.last_name\n" +
             "HAVING sum(pr.price) BETWEEN ?1 AND ?2",
             nativeQuery = true)
-    List<CustomerEntity> findCustomersWithTotalPurchaseCostInRange(Integer min, Integer max);
+    List<CustomerEntity> findCustomersWithTotalPurchaseCostInRange(Integer min, Integer max) throws SQLException;
 
     @Query(value = "SELECT c.id, c.name, c.last_name\n" +
             "FROM public.purchases AS p\n" +
@@ -41,13 +42,13 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             "ORDER BY count(*)\n" +
             "LIMIT ?1",
             nativeQuery = true)
-    List<CustomerEntity> findCustomersWithLeastNumberOfPurchases(Integer countCustomers);
+    List<CustomerEntity> findCustomersWithLeastNumberOfPurchases(Integer countCustomers) throws SQLException;
 
     @Query(value = "SELECT concat(c.name, ' ', c.last_name) AS name\n" +
             "FROM customers AS c\n" +
             "WHERE c.id = ?1",
             nativeQuery = true)
-    String findFullNameById(Long id);
+    String findFullNameById(Long id) throws SQLException;
 
 
 }

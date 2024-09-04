@@ -4,6 +4,7 @@ import com.mladentsev.analyzer.repositories.IPurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class PurchaseService {
      ** Метод
      * @param startDate принимает начало периода
      * @param endDate принимает конец периода
-     * @return возвращает список id уникальных  покупателей, совершивших покупки в заданный период startDate endDate
+     * @return возвращает список id уникальных покупателей, совершивших покупки в заданный период startDate endDate
      */
-    public List<Long> findDistinctIdByDateTimeBetween(Date startDate, Date endDate) {
+    public List<Long> findDistinctIdByDateTimeBetween(Date startDate, Date endDate) throws SQLException {
         return iPurchaseRepository.findDistinctIdByDateTimeBetween(startDate, endDate);
     }
 
@@ -34,7 +35,7 @@ public class PurchaseService {
      * @param endDate принимает конец периода
      * @return возвращает общую стоимость всех покупок совершенных в заданном периоде startDate endDate
      */
-    public Double findTotalPriceAllPurchasesBetweenDate(Date startDate, Date endDate) {
+    public Double findTotalPriceAllPurchasesBetweenDate(Date startDate, Date endDate) throws SQLException {
         return iPurchaseRepository.findTotalPriceAllPurchasesBetweenDate(startDate, endDate);
     }
 

@@ -13,6 +13,7 @@ import lombok.Data;
 
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +63,7 @@ public class Analyzer {
      * Здесь реализована общая логика разделения по типам операций.
      * @param args принимает входные аргументы запуска приложения
      */
-    public static void run(String[] args) {
+    public static void run(String[] args) throws SQLException {
         TYPE_OPERATION = args[0];
         PATH_INPUT_FILE = args[1];
         PATH_OUTPUT_FILE = args[2];
@@ -90,7 +91,7 @@ public class Analyzer {
      * @param object принимает обработанный входной файл в виде java объекта
      * @return возвращает конечный объект для записи в output.json
      */
-    private static OutputResponseSearchDTO getOutputResponseSearchDTO(Optional<Object> object) {
+    private static OutputResponseSearchDTO getOutputResponseSearchDTO(Optional<Object> object) throws SQLException {
         InputRequestSearchDTO inputRequestSearchDTO = (InputRequestSearchDTO) object.get();
         List<OutputSearchResultDTO> outputSearchResultDTOList = new ArrayList<>();
         for (InputCriteriaSearchDTO criteria : inputRequestSearchDTO.getCriterias()) {
@@ -131,7 +132,7 @@ public class Analyzer {
      * @param object принимает обработанный входной файл в виде java объекта
      * @return возвращает конечный объект для записи в output.json
      */
-    private static OutputResponseStatisticDTO getOutputResponseStatisticDTO(Optional<Object> object) {
+    private static OutputResponseStatisticDTO getOutputResponseStatisticDTO(Optional<Object> object) throws SQLException {
         OutputResponseStatisticDTO outputResponseStatisticDTO = new OutputResponseStatisticDTO();
         outputResponseStatisticDTO.setType(TYPE_OPERATION);
 
