@@ -1,14 +1,16 @@
 package com.mladentsev.analyzer.repositories;
 
-import com.mladentsev.analyzer.model.entity.CustomerEntity;
 import com.mladentsev.analyzer.model.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+/**
+ ** Класс, описывающий набор запросов в базу данных для сущности ProductEntity.
+ */
 
 @Repository
 public interface IProductRepository extends JpaRepository<ProductEntity, Long> {

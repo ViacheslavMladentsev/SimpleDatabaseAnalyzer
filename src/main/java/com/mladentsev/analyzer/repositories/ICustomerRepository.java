@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ ** Класс, описывающий набор запросов в базу данных для сущности CustomerEntity.
+ */
 @Repository
 public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
 

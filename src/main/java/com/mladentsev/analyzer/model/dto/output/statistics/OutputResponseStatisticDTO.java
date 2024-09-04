@@ -6,13 +6,17 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ ** Класс, описывающий конечный объект для записи в output.json
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OutputResponseStatisticDTO {
     String type;
     Long toolDays;
-    List<OutputCustomerDTO> customers;
+    List<OutputCustomerStatisticDTO> customers;
     Double totalExpenses;
     Double avgExpenses;
 }

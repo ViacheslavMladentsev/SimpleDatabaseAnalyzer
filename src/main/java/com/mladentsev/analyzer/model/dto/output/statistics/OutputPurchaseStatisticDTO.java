@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+/**
+ ** Промежуточный класс, для формирования структуры объекта для записи в output.json
+ */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OutputCustomerDTO {
+public class OutputPurchaseStatisticDTO {
     String name;
-    List<OutputPurchaseDTO> purchases;
+    Double price;
 }

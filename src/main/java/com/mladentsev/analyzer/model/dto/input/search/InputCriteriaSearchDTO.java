@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Класс, описывающий список критериев из входного файла для операции search.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,30 +19,34 @@ public class InputCriteriaSearchDTO {
     private Integer maxExpenses;
     private Integer badCustomers;
 
-
-    public EnumCriteriasType getCruteriaType() {
+    /**
+     * Метод, производящий частичную валидацию входных критериев из входного файла
+     * и определяющий конкретный тип критерия
+     * @return возвращает тип критерия
+     */
+    public EnumCriteriaType getCriteriaType() {
         if (this.lastName != null &&
                 this.productName == null && this.minTimes == null &&
                 this.minExpenses == null && this.maxExpenses == null &&
                 this.badCustomers == null) {
-            return EnumCriteriasType.LAST_NAME;
+            return EnumCriteriaType.LAST_NAME;
         } else if (this.lastName == null &&
                 this.productName != null && this.minTimes != null &&
                 this.minExpenses == null && this.maxExpenses == null &&
                 this.badCustomers == null) {
-            return EnumCriteriasType.TITLE_AND_COUNT;
+            return EnumCriteriaType.TITLE_AND_COUNT;
         } else if (this.lastName == null &&
                 this.productName == null && this.minTimes == null &&
                 this.minExpenses != null && this.maxExpenses != null &&
                 this.badCustomers == null) {
-            return EnumCriteriasType.RANGE_MIN_MAX;
+            return EnumCriteriaType.RANGE_MIN_MAX;
         } else if (this.lastName == null &&
                 this.productName == null && this.minTimes == null &&
                 this.minExpenses == null && this.maxExpenses == null &&
                 this.badCustomers != null) {
-            return EnumCriteriasType.BAD_CUSTOMERS;
+            return EnumCriteriaType.BAD_CUSTOMERS;
         } else {
-            return EnumCriteriasType.INCORRECT_CRITERIA;
+            return EnumCriteriaType.INCORRECT_CRITERIA;
         }
     }
 }

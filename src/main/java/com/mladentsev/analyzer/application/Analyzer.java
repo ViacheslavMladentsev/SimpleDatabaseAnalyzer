@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Класс для старта приложения с общей логикой.
+ *
+ */
 
 @Data
 @Component
@@ -53,6 +57,11 @@ public class Analyzer {
     private Analyzer() {
     }
 
+    /**
+     * Метод, который запускает приложение.
+     * Здесь реализована общая логика разделения по типам операций.
+     * @param args принимает входные аргументы запуска приложения
+     */
     public static void run(String[] args) {
         TYPE_OPERATION = args[0];
         PATH_INPUT_FILE = args[1];
@@ -75,13 +84,19 @@ public class Analyzer {
         }
     }
 
+    /**
+     * Метод, в котором происходит обработка операции search.
+     * Собирается и возвращать конечный объект для последующей записи в output.json
+     * @param object принимает обработанный входной файл в виде java объекта
+     * @return возвращает конечный объект для записи в output.json
+     */
     private static OutputResponseSearchDTO getOutputResponseSearchDTO(Optional<Object> object) {
         InputRequestSearchDTO inputRequestSearchDTO = (InputRequestSearchDTO) object.get();
         List<OutputSearchResultDTO> outputSearchResultDTOList = new ArrayList<>();
         for (InputCriteriaSearchDTO criteria : inputRequestSearchDTO.getCriterias()) {
             OutputCriteriaSearchDTO outputCriteriaSearchDTO = new OutputCriteriaSearchDTO();
             List<OutputCustomerSearchDTO> outputCustomerSearchDTOList = null;
-            switch (criteria.getCruteriaType()) {
+            switch (criteria.getCriteriaType()) {
                 case LAST_NAME:
                     outputCustomerSearchDTOList = customerService.findAllByLastName(criteria.getLastName());
                     outputCriteriaSearchDTO.setLastName(criteria.getLastName());
@@ -110,6 +125,12 @@ public class Analyzer {
         return new OutputResponseSearchDTO(SEARCH, outputSearchResultDTOList);
     }
 
+    /**
+     * Метод, в котором происходит обработка операции stat.
+     * Собирается и возвращать конечный объект для последующей записи в output.json
+     * @param object принимает обработанный входной файл в виде java объекта
+     * @return возвращает конечный объект для записи в output.json
+     */
     private static OutputResponseStatisticDTO getOutputResponseStatisticDTO(Optional<Object> object) {
         OutputResponseStatisticDTO outputResponseStatisticDTO = new OutputResponseStatisticDTO();
         outputResponseStatisticDTO.setType(TYPE_OPERATION);
@@ -122,18 +143,20 @@ public class Analyzer {
         outputResponseStatisticDTO.setToolDays(TimeUnit.DAYS.convert(dateDiffInMillis, TimeUnit.MILLISECONDS) + 1);
 
         List<Long> listIdCustomers = purchaseService.findDistinctIdByDateTimeBetween(startDate, endDate);
-        List<OutputCustomerDTO> outputCustomerDTOList = new ArrayList<>();
+        List<OutputCustomerStatisticDTO> outputCustomerStatisticDTOList = new ArrayList<>();
         for (Long listIdCustomer : listIdCustomers) {
             String customerFullName = customerService.findFullNameById(listIdCustomer);
 
-            List<OutputPurchaseDTO> outputPurchaseDTOList = productService.findAllProductAndPriceByCustomerIdBetweenDate(listIdCustomer, startDate, endDate);
-            System.out.println(outputPurchaseDTOList);
-            outputCustomerDTOList.add(new OutputCustomerDTO(customerFullName, outputPurchaseDTOList));
+            List<OutputPurchaseStatisticDTO> outputPurchaseStatisticDTOList = productService.findAllProductAndPriceByCustomerIdBetweenDate(listIdCustomer, startDate, endDate);
+            System.out.println(outputPurchaseStatisticDTOList);
+            outputCustomerStatisticDTOList.add(new OutputCustomerStatisticDTO(customerFullName, outputPurchaseStatisticDTOList));
         }
 
-        outputResponseStatisticDTO.setCustomers(outputCustomerDTOList);
+        outputResponseStatisticDTO.setCustomers(outputCustomerStatisticDTOList);
         outputResponseStatisticDTO.setTotalExpenses(purchaseService.findTotalPriceAllPurchasesBetweenDate(startDate, endDate));
-        outputResponseStatisticDTO.setAvgExpenses(outputResponseStatisticDTO.getTotalExpenses() / listIdCustomers.size());
+        if (outputResponseStatisticDTO.getTotalExpenses() != null && !listIdCustomers.isEmpty()) {
+            outputResponseStatisticDTO.setAvgExpenses(outputResponseStatisticDTO.getTotalExpenses() / listIdCustomers.size());
+        }
         return outputResponseStatisticDTO;
     }
 

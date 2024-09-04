@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+
+/**
+ ** Класс, описывающий общую структуру входного файла для операции stat в виде java объекта
+ */
 
 @Data
 @NoArgsConstructor

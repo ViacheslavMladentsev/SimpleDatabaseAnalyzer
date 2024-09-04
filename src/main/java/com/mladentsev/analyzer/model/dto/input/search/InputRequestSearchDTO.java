@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Класс, описывающий общую структуру входного файла для операции search в виде java объекта
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
