@@ -2,7 +2,8 @@ package com.mladentsev.analyzer.json;
 
 import com.google.gson.Gson;
 
-import com.mladentsev.analyzer.model.dto.input.InputRequestSearchDTO;
+import com.mladentsev.analyzer.model.dto.input.search.InputRequestSearchDTO;
+import com.mladentsev.analyzer.model.dto.input.statystic.InputRequestStatisticDTO;
 import com.mladentsev.analyzer.model.dto.output.error.OutputErrorDTO;
 
 import java.io.File;
@@ -34,9 +35,9 @@ public class AnalyzerJsonReadWrightFile {
             if (f.exists() && !f.isDirectory()) {
                 FileReader fr = new FileReader(f);
                 if (operation.equals(SEARCH)) {
-                    return Optional.of(new InputRequestSearchDTO(gson.fromJson(fr, InputRequestSearchDTO.class).getCriterias()));
+                    return Optional.of(gson.fromJson(fr, InputRequestSearchDTO.class));
                 } else if (operation.equals(STATISTICS)) {
-                    return Optional.of(new InputRequestSearchDTO(gson.fromJson(fr, InputRequestSearchDTO.class).getCriterias())); //todo здесь другое пальто
+                    return Optional.of(gson.fromJson(fr, InputRequestStatisticDTO.class));
                 }
                 fr.close();
             } else {

@@ -39,4 +39,12 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             "LIMIT ?1",
             nativeQuery = true)
     List<CustomerEntity> findCustomersWithLeastNumberOfPurchases(Integer countCustomers);
+
+    @Query(value = "SELECT concat(c.name, ' ', c.last_name) AS name\n" +
+            "FROM customers AS c\n" +
+            "WHERE c.id = ?1",
+            nativeQuery = true)
+    String findFullNameById(Long id);
+
+
 }

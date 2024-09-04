@@ -4,11 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "products")
 @Table(name = "products")
 public class ProductEntity {
@@ -17,7 +16,7 @@ public class ProductEntity {
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String title;
+    private String name;
 
     @Column(nullable = false)
     private Double price;

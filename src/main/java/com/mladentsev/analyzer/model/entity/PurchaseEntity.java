@@ -3,13 +3,13 @@ package com.mladentsev.analyzer.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "purchases")
 @Table(name = "purchases")
 public class PurchaseEntity {
@@ -24,5 +24,5 @@ public class PurchaseEntity {
     private ProductEntity product;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDate date;
 }

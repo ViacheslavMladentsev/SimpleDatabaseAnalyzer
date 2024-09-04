@@ -1,4 +1,4 @@
-package com.mladentsev.analyzer.model.dto.input;
+package com.mladentsev.analyzer.model.dto.output.statistics;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InputRequestSearchDTO {
-
-    List<InputCriteriaSearchDTO> criterias;
-
+public class OutputCustomerDTO {
+    String name;
+    List<OutputPurchaseDTO> purchases;
 }

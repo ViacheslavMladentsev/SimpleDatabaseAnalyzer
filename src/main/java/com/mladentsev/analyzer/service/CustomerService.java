@@ -42,4 +42,8 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
+    public String findFullNameById(Long id) {
+        return iCustomerRepository.findFullNameById(id);
+    }
+
 }

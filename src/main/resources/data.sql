@@ -8,7 +8,7 @@ VALUES ('Иван', 'Иванов'),
        ('Елена', 'Емельянова');
 
 -- Заполнение таблицы товарами
-INSERT INTO products (title, price)
+INSERT INTO products (name, price)
 VALUES ('Продукт 1', 100),
        ('Продукт 2', 200),
        ('Продукт 3', 300),
@@ -21,7 +21,7 @@ VALUES ('Продукт 1', 100),
        ('Продукт 10', 1000);
 
 -- Заполнение таблицы покупками
-INSERT INTO purchases (date_time, customer_id, product_id)
+INSERT INTO purchases (date, customer_id, product_id)
 VALUES ('26-08-2024', 1, 4),
        ('26-08-2024', 1, 2),
        ('26-08-2024', 1, 7),
